@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978d6cbb11410f9419bcbd2b9912832f, type: 3}
   m_Name: axe
   m_EditorClassIdentifier: 
-  itemName: 
-  itemIcon: {fileID: 0}
+  itemName: axe
+  itemIcon: {fileID: 21300000, guid: b1706ddc0f3b13a46abfec9486014c5d, type: 3}
   weaponType: 0
