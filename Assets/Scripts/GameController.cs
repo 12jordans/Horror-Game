@@ -8,13 +8,12 @@ public class GameController : MonoBehaviour
 
     public GameOverScreen gameOverScreen;
     public HealthBar healthBar;
-    public StaminaBar staminaBar;
     public MouseLook mouseLook;
     public PlayerMovement playerMovement;
+   
 
     public void GameOver() {
         healthBar.HideHealthBar();
-        staminaBar.HideStaminaBar();
         gameOverScreen.ShowGameOverScreen();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -35,7 +34,6 @@ public class GameController : MonoBehaviour
     {
         gameOverScreen.HideGameOverScreen();
         healthBar.ShowHealthBar();
-        staminaBar.ShowStaminaBar();
     }
 
     // Update is called once per frame
