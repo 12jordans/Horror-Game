@@ -25,8 +25,12 @@ public class PlayerMovement : MonoBehaviour
         gameRunning = false;
     }
 
-    void Start() {
+    public void StartGame() {
         gameRunning = true;
+    }
+
+    void Start() {
+        StartGame();
     }
 
     void Update()

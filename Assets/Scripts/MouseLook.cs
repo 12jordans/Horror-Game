@@ -16,11 +16,15 @@ public class MouseLook : MonoBehaviour
         gameRunning = false;
     }
 
+    public void StartGame() {
+        Cursor.lockState = CursorLockMode.Locked;
+        gameRunning = true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        gameRunning = true;
+        StartGame();
     }
 
     // Update is called once per frame
