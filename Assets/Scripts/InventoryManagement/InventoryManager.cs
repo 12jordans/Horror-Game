@@ -4,59 +4,25 @@ using UnityEngine;
 using UnityEngine.UI; 
 
 public class InventoryManager : MonoBehaviour
-{
-
-    public GameObject InvenMessage;
-    [SerializeField] private GameObject slotHolder; 
-   [SerializeField] private ItemClass itemToAdd;
-   [SerializeField] public ItemClass healthPowerup;
-    public static bool addHealth_pu;
-    public static bool useHealth_pu;
-    public static bool hasHealthKit;
-    public static bool showMessage; 
-
+{ 
+  
+   [SerializeField] private GameObject slotHolder; 
+   [SerializeField] private ItemClass itemToAdd; 
 
     public List<SlotClass> items = new List<SlotClass>();
 
     private GameObject[] slots;
-    void Start()
+
+    public void Start()
     {
-        
         slots = new GameObject[slotHolder.transform.childCount];
         //set each slot
         for( int i = 0; i < slotHolder.transform.childCount; i++)
         {
             slots[i] = slotHolder.transform.GetChild(i).gameObject;  // all slots in canvas stored in this arr
         }
-      
-        addHealth_pu = false;
-        useHealth_pu = false;
-        showMessage = false; 
         RefreshUI(); 
     }
-    private void Update()
-    {
-        if(Contains(healthPowerup) != null)
-        {
-            hasHealthKit = true;
-        } else
-        {
-            hasHealthKit = false; 
-        }
-
-        if (addHealth_pu)
-        {
-            Add(healthPowerup); 
-            addHealth_pu = false; 
-        }
-
-        if (useHealth_pu)
-        {
-            Remove(healthPowerup);
-            useHealth_pu = false; 
-        }
-    }
-
 
     public void RefreshUI() // if item in slot, we set the image 
     {
@@ -78,12 +44,14 @@ public class InventoryManager : MonoBehaviour
     {
         //check if inv already contains item
         SlotClass slots = Contains(item); 
-        items.Add(new SlotClass(item, 1));
-        if ((Input.GetKeyDown(KeyCode.P))){
-            showMessage = true; 
-            InvenMessage.gameObject.SetActive(true);
+        if (slots != null)
+        {
+            slots.AddQuantity(1); 
+        } else
+        {
+            items.Add(new SlotClass(item, 1)); 
         }
-      
+
         RefreshUI(); 
     }
 
@@ -93,7 +61,22 @@ public class InventoryManager : MonoBehaviour
         SlotClass tmp = Contains(item);
         if (tmp != null)
         {
-                items.Remove(items[items.Count-1]);
+            if(tmp.GetQuantity() > 1) { tmp.SubtractQuantity(1); }
+            else
+            {
+                SlotClass slotRemove = null;  //might cause issues 
+                foreach (SlotClass slot in items)
+                {
+                    if (slot.GetItem() == item)
+                    {
+                        slotRemove = slot;
+
+                        break;
+                    }
+                }
+                items.Remove(slotRemove);
+            }
+            // minus one from the item
         }
         else
         {
@@ -115,8 +98,3 @@ public class InventoryManager : MonoBehaviour
         return null; 
     }
 }
-
-/* Source: ErinMakesGames on YouTube, Inventory System Tutorial -- 
- * A lot of the code for the inventory system is sourced from this series (the item classes as well), with customization added for 
- * this specific game. 
- */ 
