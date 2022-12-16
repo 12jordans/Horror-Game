@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new Powerup Class", menuName = "Inventory Item/Powerup")]
-public class PowerupClass : ItemClass
+public class PowerupClass : ItemClass 
 {
     [Header("Power Up (inventory item)")]
     public float healthAdded; // health added to player
