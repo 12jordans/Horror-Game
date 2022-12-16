@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: health_pack
   m_EditorClassIdentifier: 
   itemName: Health
-  itemIcon: {fileID: 21300000, guid: 02508626bf5c48b40924902184557575, type: 3}
-  healthAdded: 1
+  itemIcon: {fileID: 21300000, guid: fcd93b3eda9f39b45ad83a4542b04f0d, type: 3}
+  healthAdded: 0
   timeStunned: 0
