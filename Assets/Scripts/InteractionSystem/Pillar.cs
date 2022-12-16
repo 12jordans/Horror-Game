@@ -6,7 +6,6 @@ public class Pillar : MonoBehaviour
 {   
     public GameObject pillarObj;
     public Material RunePillar;
-    Material [] runeMaterials;
     [SerializeField] private string prompt;
     public string InteractionPrompt => prompt;
     MeshRenderer meshPillar;  
@@ -20,12 +19,13 @@ public class Pillar : MonoBehaviour
        // meshPillar.material = runeMaterials[1];
        // Debug.Log(runeMaterials[0]);
         //meshPillar.material = meshPillar.sharedMaterial[1];
+        meshPillar = pillarObj.GetComponent<MeshRenderer>();
         
     }
 
     public bool Interact(Interactor interactor)
     {
-        meshPillar = pillarObj.GetComponent<MeshRenderer>();
+        
         meshPillar.material = RunePillar;
         Debug.Log(RunePillar);
         Debug.Log(message:"Interacted with pillar!");
