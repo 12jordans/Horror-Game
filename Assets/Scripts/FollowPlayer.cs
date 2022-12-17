@@ -6,10 +6,6 @@ using UnityEngine.UI;
 
 public class FollowPlayer : MonoBehaviour
 {
-<<<<<<< HEAD
-=======
-	public SpawnManager spawnManager;
-	public GameObject ghostMove;
 	public bool flicker = true;
 	Coroutine coroutine=null;
 	public bool lightTimer = true;
@@ -17,57 +13,22 @@ public class FollowPlayer : MonoBehaviour
 	public SpotLightOn spotlightOn2;
 	public CameraSwitch cameraSwitch;
 	public Transform ghost;
->>>>>>> face785e18455f04d856fac268ac15eef05939a4
 	public PlayerHealth playerHealth;
 	public HealthBar healthBar;
+	public GameController gameController;
 	public int temp = 1;
 	//public Animator animator;
 	public Text text;
 	//public Animator animator;
-<<<<<<< HEAD
-
-	public int _index = 1;
-	public Transform target;
-    NavMeshAgent nav;
-    // Start is called before the first frame update
-    public void Start()
-    {
-		
-		ChangeAnimation();
-		nav = GetComponent<NavMeshAgent>();
-
-	}
-
-    // Update is called once per frame
-    public void Update()
-    {
-		
-		if (Time.fixedTime >5)
-		{
-			_index = 1;
-			ChangeAnimation();
-		}
-		if (Time.fixedTime > 8)
-		{
-			_index = 2;
-			ChangeAnimation();
-		}
-		
-		
-		if (Time.fixedTime >= 10)
-        {
-            nav.SetDestination(target.position);
-			attack();
-
-			
-		}
-=======
 	public int _index = 2;
 	public Transform target;
 	NavMeshAgent nav;
 	public int l;
 	public MouseLook mouseLook;
 	public PlayerMovement playerMovement;
+
+	public MouseLook mouseLook2;
+	public PlayerMovement playerMovement2;
 	// Start is called before the first frame update
 	public void Start()
 	{
@@ -77,6 +38,7 @@ public class FollowPlayer : MonoBehaviour
 		l = 0;
 		ChangeAnimation();
 		nav = GetComponent<NavMeshAgent>();
+		//GetComponent<NavMeshAgent>().transform.position = new Vector3(-204, 3, 200);
 		cameraSwitch.MainCam();
 	}
 
@@ -93,17 +55,14 @@ public class FollowPlayer : MonoBehaviour
 			lightTimer = true;
 			
 		}
-		if (distance <= 20)
+		if (distance <= 10)
 		{
-
 			Flicker();
+			//mouseLook.StopGame();
+			playerMovement.StopGame();
+			//mouseLook.playerBody.transform.LookAt(ghost);
 			spotlightOn2.LightOff();
 			
-		}
-        if (distance <= 5)
-        {
-			ghostMove.GetComponent<NavMeshAgent>().isStopped = true;
-			playerMovement.StopGame();
 		}
 	}
 
@@ -111,55 +70,26 @@ public class FollowPlayer : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		ghostMove.GetComponent<NavMeshAgent>().isStopped = true;
-		if (playerHealth.currentHealth == 1)
-		{
-			onLastAttack();
-		}
+		
+		cameraSwitch.GhostCam();
 		lightTimer = false;
 		StopCoroutine(coroutine);
 		StopAllCoroutines();
 		spotlightOn2.LightOff();
 		spotlightOn.LightOn();
 		attack();
->>>>>>> face785e18455f04d856fac268ac15eef05939a4
 	}
 
-	private void onLastAttack()
-    {
-		StopCoroutine(coroutine);
-		StopAllCoroutines();
-		spotlightOn2.LightOff();
-		spotlightOn.LightOn();
-		cameraSwitch.GhostCam();
-	}
 
 
 	public void attack()
-<<<<<<< HEAD
-    {
-		//Debug.Log("reached");
-		if (Vector3.Distance(GetComponent<NavMeshAgent>().destination, GetComponent<NavMeshAgent>().transform.position) <= 3)
-		{
-			if (GetComponent<NavMeshAgent>().hasPath || GetComponent<NavMeshAgent>().velocity.sqrMagnitude == 0f)
-			{
-				//Debug.Log("reached");
-				_index = 3;
-				ChangeAnimation();
-				_index = 0;
-				Invoke("waiter", 3f);
-				Invoke("OnceMoved", 7f);
-			}
-			
-		}
-=======
 	{
 		flicker = false;
 		spotlightOn2.LightOff();
 		_index = 3;
 		ChangeAnimation();
 		Invoke("waiter", 3f);
->>>>>>> face785e18455f04d856fac268ac15eef05939a4
+		//Invoke("OnceMoved", 7f);
 	}
 
 
@@ -168,21 +98,37 @@ public class FollowPlayer : MonoBehaviour
 	{
 		if (temp == 1)
 		{
-<<<<<<< HEAD
-			Debug.Log("here");
-			//yield return new WaitForSeconds(3);
+			float x;
+			float z;
+			float playerx = target.transform.position.x;
+			float playerz = target.transform.position.z;
 			playerHealth.currentHealth -= 1;
 			healthBar.SetHealth(playerHealth.currentHealth);
-			int x = Random.Range(-244, 71);
-			int y = 5;
-			int z = Random.Range(-24, 210);
+			if (playerx <= -325)
+			{
+				float x2 = playerx + 100;
+				x = Random.Range(x2, -185);
+			}
+			else
+			{
+				float x2 = playerx + -100;
+				x = Random.Range(-498, x2);
+			}
+			if (playerz <= 115)
+			{
+				float z2 = playerz + 100;
+				z = Random.Range(z2, 260);
+			}
+			else
+			{
+				float z2 = playerz + -100;
+				z = Random.Range(-9, z2);
+			}
+
+			float y = 3;
 			GetComponent<NavMeshAgent>().transform.position = new Vector3(x, y, z);
 			//Debug.Log("here");
-			temp = 0;
-=======
-			playerHealth.currentHealth -= 1;
-			healthBar.SetHealth(playerHealth.currentHealth);
-			changeLocation();
+			//temp = 0;
 			l = 0;
 			_index = 1;
 			ChangeAnimation();
@@ -194,21 +140,25 @@ public class FollowPlayer : MonoBehaviour
 			spotlightOn2.LightOn();
 			lightTimer = true;
 			flicker = true;
->>>>>>> face785e18455f04d856fac268ac15eef05939a4
 		}
 
 	}
 
 	public void OnceMoved()
-    {
+	{
 		temp = 1;
 	}
+
+
 
 	public void ChangeAnimation()
 	{
 
 		Animator animator1 = GameObject.Find("ghost_tPose").GetComponent<Animator>();
 		animator1.SetInteger("index", _index);
+
+		//animator1 = GameObject.Find("girl/clothingSet_01_body").GetComponent<Animator>();
+		//animator1.SetInteger("index", _index);
 
 		string name = "";
 		switch (_index)
@@ -231,18 +181,25 @@ public class FollowPlayer : MonoBehaviour
 
 
 		}
+
+		//text.text = string.Concat(_index.ToString(), ". ", name);
 	}
-<<<<<<< HEAD
-=======
 
 
 	public IEnumerator ExampleCoroutine()
 	{
 		if (flicker)
 		{
+			//Print the time of when the function is first called.
+			//yield on a new YieldInstruction that waits for 5 seconds.
+			//yield return new WaitForSeconds(1);
 			spotlightOn2.LightOff();
 			yield return new WaitForSeconds(1);
 			spotlightOn2.LightOn();
+
+
+
+			//After we have waited 5 seconds print the time again.
 		}
 	
 	}
@@ -255,19 +212,4 @@ public class FollowPlayer : MonoBehaviour
 			lightTimer = false;
 		}
 	}
-
-	void changeLocation()
-	{
-		ghostMove.SetActive(false);
-		float x;
-		float y;
-		float z;
-		Vector3 pos;
-		x = Random.Range(-517,-237);
-		y = 5;
-		z = Random.Range(10, 240);
-		ghostMove.transform.position = new Vector3(x, y, z);
-		ghostMove.SetActive(true);
-	}
->>>>>>> face785e18455f04d856fac268ac15eef05939a4
 }

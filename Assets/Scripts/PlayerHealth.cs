@@ -4,42 +4,54 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-
+     
     public int maxHealth = 3;
     public int currentHealth;
+
     public HealthBar healthBar;
     public FollowPlayer followPlayer;
+    private PowerupClass health_pack;
 
-    // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         followPlayer._index = 1;
+        
+    }
+
+    public int getHealth()
+    {
+        return currentHealth;
+    }
+
+    public void setHealth(int newHealth)
+    {
+        currentHealth = newHealth; 
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && InventoryManager.hasHealthKit)
+        {
+            if (currentHealth <= maxHealth)
+            {
+                currentHealth++;
+                healthBar.SetHealth(currentHealth);
+                InventoryManager.useHealth_pu = true;
+
+            }
+        }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        // Take damage
-        /*
-        if (followPlayer._index == 3)
-        {
-            Debug.Log(followPlayer._index);
-            currentHealth -= 1;
-            healthBar.SetHealth(currentHealth);
-            followPlayer._index = 0;
-            Debug.Log(followPlayer._index);
-        }
-        */
 
-    }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Health Kit") && currentHealth < maxHealth) {
+        if (other.CompareTag("Health Kit")) {
+
             Destroy(other.gameObject);
-            currentHealth += 1;
-            healthBar.SetHealth(currentHealth);
+            InventoryManager.addHealth_pu = true; 
         }
     }
 }

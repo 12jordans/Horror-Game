@@ -12,7 +12,4 @@ public abstract class ItemClass : ScriptableObject // shared across every item
     public abstract ToolClass getTool();
     public abstract PowerupClass getPowerup();
     public abstract WeaponClass getWeapon();
-
-
-
 }
